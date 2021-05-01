@@ -12,4 +12,5 @@ public interface SelService {
     List<TagPO> selTagPO();
     MarkDown selBlogById(Integer id);
     MarkDownInfo selBlogInfoByMid(Integer mid);
+    Integer selBlogTotal();
 }

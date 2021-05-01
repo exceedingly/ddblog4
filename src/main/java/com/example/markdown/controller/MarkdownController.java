@@ -23,14 +23,47 @@ import java.util.UUID;
 /* 类注解 */
 @Api(value = "MD文件注解")
 @Controller
-
 public class MarkdownController {
+
+
+
+    /**
+     * 文件上传
+     * @param files 需要上传的文件
+     * @return 文件url
+     * @author YSL
+     * 2019-03-01 17:14
+     */
+    @RequestMapping("/file_upload")
+    @ResponseBody
+    public List<String> fileUpload(@RequestParam(value = "files", required = false) MultipartFile[] files, HttpServletRequest request){
+        List<String> urlList = upload(files, "pictures", request);
+        return urlList;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Autowired
     MarkdownServiceImpl markdownServiceImpl;
-
-
-
 
     /* 方法注解 */
     @ApiOperation(value = "方法注解", notes = "方法注解笔记")
@@ -51,9 +84,9 @@ public class MarkdownController {
      * 2019-03-01 17:14
      */
     @RequestMapping("/api/img_upload")
+    @PassToken
     @ResponseBody
     public String imgUpload(@RequestParam(value = "pic", required = false) MultipartFile pic, HttpServletRequest request){
-
         List<String> urlList = upload(new MultipartFile[]{pic}, "pictures", request);
         System.out.println(52);
         System.out.println(urlList);
@@ -68,8 +101,9 @@ public class MarkdownController {
      * 2019-03-01 17:14
      */
     @RequestMapping("/api/mul_img_upload")
+    @PassToken
     public List<String[]> imgUpload(@RequestParam(value = "pics", required = false) MultipartFile[] pics, HttpServletRequest request){
-        System.out.println("执行了");
+        System.out.println("106");
         List<String> urlList = upload(pics, "pictures", request);
 
         List<String[]>  list = new ArrayList<>();
@@ -99,7 +133,7 @@ public class MarkdownController {
         // 专门存放文件工程名称（是一个javaweb工程，方便图片直接通过http访问）
         String fileProject = "blog_files";
         // 备份路径
-        String bakPath = "F:/webserver_bak/blog/";
+            String bakPath = "F:/webserver_bak/blog/";
         //http://localhost:7989/
         String ipPort = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort() + "/";
 
@@ -130,10 +164,8 @@ public class MarkdownController {
 
         // 文件最终保存目录
         String fileDir = fileRoot.toString();
-
         List<String>  list = new ArrayList<>();
         for (MultipartFile  multipartFile : files) {
-
             // 文件名称。markdown编辑器图片路径不能有空格
             String upFileName = multipartFile.getOriginalFilename().replaceAll("\\s+", "");
             String filename = new SimpleDateFormat("HHmmss").format(new Date()) + "_" + UUID.randomUUID().toString() + "_" + upFileName;
@@ -143,10 +175,8 @@ public class MarkdownController {
             try {
                 // 复制临时文件到指定目录下, 会创建没有的目录
                 FileUtils.copyInputStreamToFile(multipartFile.getInputStream(), destFile);
-
                 // 拼接url
                 list.add(ipPort + fileDir + filename);
-
                 // 备份
                 File bakFile = new File(bakPath + fileDir + filename);
                 FileUtils.copyInputStreamToFile(multipartFile.getInputStream(), bakFile);
@@ -179,6 +209,7 @@ public class MarkdownController {
      */
     @GetMapping("/get")
     @ResponseBody
+    @PassToken
     public void test(@RequestParam("id")Integer id){
         // 获取数据库中的数据，请自行实现。
        // return vueMarkdownMapper.query(id);
@@ -193,6 +224,7 @@ public class MarkdownController {
      */
     @PostMapping("/api/add")
     @ResponseBody
+
     public int test(@RequestBody MarkDownDTO markDown){
         markdownServiceImpl.insMarkdown(markDown);
         System.out.println(markDown.getId()==null);

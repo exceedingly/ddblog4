@@ -32,9 +32,7 @@ public class Ddblog1Application {
                         .allowCredentials(false).maxAge(3600);
             }
         };
-
-
-    }
+      }
     @Bean
     public FilterRegistrationBean registerFilter(){
         FilterRegistrationBean bean = new FilterRegistrationBean();

@@ -20,7 +20,7 @@ public class SelServiceImpl implements SelService {
 
     @Override
     public List<MarkDown> selBlogByPage(Integer pageNumber) {
-        return selDao.selBlogByPage(pageNumber*10);
+        return selDao.selBlogByPage((pageNumber-1)*10);
     }
 
     @Override
@@ -35,5 +35,10 @@ public class SelServiceImpl implements SelService {
     @Override
     public MarkDownInfo selBlogInfoByMid(Integer mid) {
         return selDao.selBlogInfoByMid(mid);
+    }
+
+    @Override
+    public Integer selBlogTotal() {
+        return selDao.selBlogTotal();
     }
 }

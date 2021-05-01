@@ -3,6 +3,7 @@ package com.example.markdown.controller;
 import com.example.annotation.PassToken;
 import com.example.markdown.bean.MarkDown;
 import com.example.markdown.bean.MarkDownInfo;
+import com.example.markdown.bean.SelBlogAndPageDTO;
 import com.example.markdown.bean.TagPO;
 import com.example.markdown.service.impl.SelServiceImpl;
 import io.swagger.annotations.Api;
@@ -27,10 +28,11 @@ public class selectController {
     @ApiOperation(value = "查询博客", notes = "查询博客十条 按照页数查询")
     @RequestMapping(value = "/selBlogByPage",method = RequestMethod.GET)
     @ResponseBody
-    public List<MarkDown> selBlogByPage(Integer PageNum){
-        return selService.selBlogByPage(PageNum);
+    public SelBlogAndPageDTO selBlogByPage(Integer PageNum){
+        return new SelBlogAndPageDTO(selService.selBlogTotal(),selService.selBlogByPage(PageNum));
     }
     @ApiOperation(value = "查询所有文章类型")
+
     @RequestMapping(value = "/selBlogType",method = RequestMethod.GET)
     @ResponseBody
     public List<TagPO> selBlogTag(){

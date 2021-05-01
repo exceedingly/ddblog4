@@ -21,6 +21,8 @@ public interface SelDao {
 
        @Select("select * from dd_markdown_info where mid=#{mid} ")
        MarkDownInfo selBlogInfoByMid(Integer mid);
+       @Select("select count(*) from dd_markdown  ")
+       Integer selBlogTotal();
 
 
 }
