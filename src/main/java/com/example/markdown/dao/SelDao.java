@@ -10,7 +10,7 @@ import java.util.List;
 
 @Mapper
 public interface SelDao {
-       @Select("select * from dd_markdown limit #{PageNumber},10")
+       @Select("select * from dd_markdown where status = 1 limit #{PageNumber},10")
        List<MarkDown> selBlogByPage(Integer PageNumber);
 
        @Select("select * from dd_bbs_tag ")

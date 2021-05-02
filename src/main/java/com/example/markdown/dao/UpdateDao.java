@@ -11,5 +11,6 @@ import java.util.List;
 public interface UpdateDao {
     @Update("update dd_markdown set gmt_modified = #{gmt_modified},type = #{type},content = #{content},name = #{name},markHtml = #{markHtml},markCode = #{markCode} where id = #{id}")
     int updMarkdown(MarkDown markDown);
-
+    @Update("update dd_markdown set show = '0' where id = #{id}")
+    int updMarkdownById(Integer id);
 }

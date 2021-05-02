@@ -12,6 +12,11 @@ import java.lang.reflect.Method;
 public class LoginFilter extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
+
+
+
+
         // 如果不是映射到方法直接通过
         if(!(handler instanceof HandlerMethod)){
             return true;
@@ -42,4 +47,5 @@ public class LoginFilter extends HandlerInterceptorAdapter {
             }
         }
    }
-}
+    }
+

@@ -3,6 +3,7 @@ package com.example.markdown.controller;
 import com.example.annotation.PassToken;
 import com.example.markdown.bean.MarkDownDTO;
 import com.example.markdown.service.impl.MarkdownServiceImpl;
+import com.sun.deploy.net.HttpResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.io.FileUtils;
@@ -11,9 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import javax.servlet.http.HttpServletResponse;
+import javax.websocket.server.PathParam;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,24 +41,6 @@ public class MarkdownController {
         List<String> urlList = upload(files, "pictures", request);
         return urlList;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -231,4 +214,33 @@ public class MarkdownController {
         return 1;
     }
 
+
+    @ApiOperation(value = "查询图片api ")
+    @RequestMapping(value = "/blog_files/pictures/{time}/{url}",method = RequestMethod.GET)
+    @PassToken
+    @ResponseBody
+    public void  blog_files(HttpServletResponse response,  @PathVariable ("time") String time, @PathVariable ("url") String url ){
+        FileInputStream fis = null;
+        response.setContentType("image/gif");
+        try {
+            OutputStream out = response.getOutputStream();
+            File file = new File("F:/webserver_bak/blog/blog_files/pictures/"+time+'/'+url);
+            fis = new FileInputStream(file);
+            byte[] b = new byte[fis.available()];
+            fis.read(b);
+            out.write(b);
+            out.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
 }
