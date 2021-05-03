@@ -116,7 +116,8 @@ public class MarkdownController {
         // 专门存放文件工程名称（是一个javaweb工程，方便图片直接通过http访问）
         String fileProject = "blog_files";
         // 备份路径
-            String bakPath = "F:/webserver_bak/blog/";
+        String bakPath = markdownServiceImpl.selImagePath();
+         //   String bakPath = "F:/webserver_bak/blog/";
         //http://localhost:7989/
         String ipPort = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort() + "/";
 
@@ -224,7 +225,8 @@ public class MarkdownController {
         response.setContentType("image/gif");
         try {
             OutputStream out = response.getOutputStream();
-            File file = new File("F:/webserver_bak/blog/blog_files/pictures/"+time+'/'+url);
+            String bakPath = markdownServiceImpl.selImagePath();
+            File file = new File(bakPath+"blog_files/pictures/"+time+'/'+url);
             fis = new FileInputStream(file);
             byte[] b = new byte[fis.available()];
             fis.read(b);

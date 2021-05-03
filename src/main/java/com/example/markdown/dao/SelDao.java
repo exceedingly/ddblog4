@@ -24,5 +24,8 @@ public interface SelDao {
        @Select("select count(*) from dd_markdown  ")
        Integer selBlogTotal();
 
+       @Select("select value from dd_constant where name='imagespath'  ")
+       String selImagesPath();
+
 
 }

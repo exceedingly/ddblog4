@@ -14,6 +14,6 @@ public class TestController {
     SelDao selDao;
     @Test
     void fun() {
-        System.out.println(selDao.selBlogTotal());
+        System.out.println(selDao.selImagesPath());
     }
 }

@@ -4,6 +4,7 @@ import com.example.markdown.bean.MarkDown;
 import com.example.markdown.bean.MarkDownDTO;
 import com.example.markdown.bean.MarkDownInfo;
 import com.example.markdown.dao.MarkdownDao;
+import com.example.markdown.dao.SelDao;
 import com.example.markdown.dao.UpdateDao;
 import com.example.markdown.service.MarkdownService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class MarkdownServiceImpl implements MarkdownService {
 
     @Autowired
     UpdateDao updateDao;
+
+    @Autowired
+    SelDao selDao;
 
     public int insMarkdown(MarkDownDTO markDownDTO) {
 
@@ -61,5 +65,6 @@ public class MarkdownServiceImpl implements MarkdownService {
         return markdownDao.insMarkdown(markDown);
     }
 
+    public String selImagePath(){return selDao.selImagesPath();}
 
 }
